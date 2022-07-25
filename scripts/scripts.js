@@ -2,33 +2,27 @@ import { getMiloLibs, getMiloBlocks } from './milo.js';
 
 const ROOT = '';
 
-const miloLibs = getMiloLibs();
-const miloBlocks = await getMiloBlocks();
+const MILO_LIBS = getMiloLibs();
+const MILO_BLOCKS = await getMiloBlocks();
+
+// Replace or add if you want your own styles.
+const STYLES = `${MILO_LIBS}/styles/styles.css`;
+
 const {
   decorateArea,
-  getMetadata,
+  decorateNavs,
   loadArea,
   loadLCP,
   loadStyle,
-} = await import(`${miloLibs}/utils/utils.js`);
-
-function decorateNavs() {
-  const selectors = [];
-  if (getMetadata('nav') !== 'off') { selectors.push('header'); }
-  if (getMetadata('footer') !== 'off') { selectors.push('footer'); }
-  const navs = document.querySelectorAll(selectors.toString());
-  return [...navs].map((nav) => {
-    nav.className = nav.nodeName.toLowerCase();
-    return nav;
-  });
-}
+  loadDelayed,
+} = await import(`${MILO_LIBS}/utils/utils.js`);
 
 async function loadBlock(block) {
   const { status } = block.dataset;
   if (!status === 'loaded') return block;
   block.dataset.status = 'loading';
   const name = block.classList[0];
-  const base = miloBlocks.includes(name) ? miloLibs : ROOT;
+  const base = MILO_BLOCKS.includes(name) ? MILO_LIBS : ROOT;
   const styleLoaded = new Promise((resolve) => {
     loadStyle(`${base}/blocks/${name}/${name}.css`, resolve);
   });
@@ -55,12 +49,13 @@ async function loadBlock(block) {
 }
 
 (async function loadPage() {
+  await loadStyle(STYLES);
+  await loadStyle(`${MILO_LIBS}/styles/variables.css`);
   const blocks = decorateArea();
-  const navs = decorateNavs(getMetadata);
+  const navs = decorateNavs();
   await loadLCP({ blocks, loader: loadBlock });
-  loadStyle(`${miloLibs}/fonts/fonts.css`);
   await loadArea({ blocks: [...navs, ...blocks], loader: loadBlock });
-  const { default: loadModals } = await import(`${miloLibs}/blocks/modals/modals.js`);
+  const { default: loadModals } = await import(`${MILO_LIBS}/blocks/modals/modals.js`);
   loadModals();
-  // loadDelayed();
+  loadDelayed();
 }());
