@@ -57,7 +57,7 @@ function hasSchema(host) {
               );
               document.dispatchEvent(skEvent);
             };
-            script.src = `https://${config.innerHost}/libs/ui/library/library.js`;
+            script.src = 'https://main--milo--adobecom.hlx.page/libs/ui/library/library.js';
             document.head.appendChild(script);
           },
         },
