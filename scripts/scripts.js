@@ -5,9 +5,6 @@ const ROOT = '';
 const MILO_LIBS = getMiloLibs();
 const MILO_BLOCKS = await getMiloBlocks();
 
-// Replace or add if you want your own styles.
-const STYLES = `${MILO_LIBS}/styles/styles.css`;
-
 const {
   decorateArea,
   decorateNavs,
