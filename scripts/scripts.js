@@ -1,61 +1,39 @@
-import { getMiloLibs, getMiloBlocks } from './milo.js';
+import getMiloLibs from './milo.js';
 
-const ROOT = '';
-
-const MILO_LIBS = getMiloLibs();
-const MILO_BLOCKS = await getMiloBlocks();
-
-// Replace or add if you want your own styles.
-const STYLES = `${MILO_LIBS}/styles/styles.css`;
+const config = {
+  imsClientId: 'college',
+  projectRoot: `${window.location.origin}/`,
+  locales: {
+    '': { ietf: 'en-US', tk: 'hah7vzn.css' },
+    de: { ietf: 'de-DE', tk: 'hah7vzn.css' },
+    cn: { ietf: 'zh-CN', tk: 'puu3xkp' },
+  },
+  miloLibs: getMiloLibs(),
+};
 
 const {
+  loadStyle,
   decorateArea,
   decorateNavs,
-  loadArea,
   loadLCP,
-  loadStyle,
+  loadArea,
   loadDelayed,
-} = await import(`${MILO_LIBS}/utils/utils.js`);
-
-async function loadBlock(block) {
-  const { status } = block.dataset;
-  if (!status === 'loaded') return block;
-  block.dataset.status = 'loading';
-  const name = block.classList[0];
-  const base = MILO_BLOCKS.includes(name) ? MILO_LIBS : ROOT;
-  const styleLoaded = new Promise((resolve) => {
-    loadStyle(`${base}/blocks/${name}/${name}.css`, resolve);
-  });
-  const scriptLoaded = new Promise((resolve) => {
-    (async () => {
-      try {
-        const { default: init } = await import(`${base}/blocks/${name}/${name}.js`);
-        await init(block);
-      } catch (err) {
-        // eslint-disable-next-line no-console
-        console.log(`Failed loading ${name}`, err);
-      }
-      resolve();
-    })();
-  });
-  await Promise.all([styleLoaded, scriptLoaded]);
-  delete block.dataset.status;
-  const section = block.closest('.section[data-status]');
-  if (section) {
-    const decoratedBlock = section.querySelector(':scope > [data-status]');
-    if (!decoratedBlock) { delete section.dataset.status; }
-  }
-  return block;
-}
+  loadTemplate,
+  setConfig,
+} = await import(`${config.miloLibs}/utils/utils.js`);
 
 (async function loadPage() {
-  await loadStyle(STYLES);
-  await loadStyle(`${MILO_LIBS}/styles/variables.css`);
+  await new Promise((resolve) => {
+    loadStyle(`${config.miloLibs}/styles/styles.css`, resolve);
+  });
+  setConfig(config);
   const blocks = decorateArea();
   const navs = decorateNavs();
-  await loadLCP({ blocks, loader: loadBlock });
-  await loadArea({ blocks: [...navs, ...blocks], loader: loadBlock });
-  const { default: loadModals } = await import(`${MILO_LIBS}/blocks/modals/modals.js`);
+  await loadLCP({ blocks });
+  import(`${config.miloLibs}/utils/fonts.js`);
+  loadTemplate();
+  await loadArea({ blocks: [...navs, ...blocks] });
+  const { default: loadModals } = await import(`${config.miloLibs}/blocks/modals/modals.js`);
   loadModals();
   loadDelayed();
 }());

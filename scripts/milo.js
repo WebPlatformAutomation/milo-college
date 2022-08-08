@@ -1,24 +1,20 @@
 let miloLibs;
-let miloBlocks;
 
-export function getMiloLibs() {
+/**
+ * Get Milo Libs
+ *
+ * The project determines where it wants to load milo from.
+ * On production, it is expected that the origin for '/libs' points to milo.
+ *
+ * @returns miloLibs
+ */
+export default function getMiloLibs() {
   if (miloLibs) return miloLibs;
   const { hostname } = window.location;
   if (!hostname.includes('hlx.page')
     && !hostname.includes('hlx.live')
     && !hostname.includes('localhost')) return '/libs';
-  const libsBranch = new URLSearchParams(window.location.search).get('milolibs') || 'main';
-  miloLibs = libsBranch === 'local' ? 'http://localhost:6456/libs' : `https://${libsBranch}.milo.pink/libs`;
+  const branch = new URLSearchParams(window.location.search).get('milolibs') || 'main';
+  miloLibs = branch === 'local' ? 'http://localhost:6456/libs' : `https://${branch}.milo.pink/libs`;
   return miloLibs;
-}
-
-export async function getMiloBlocks() {
-  if (miloBlocks) return miloBlocks;
-  try {
-    const { default: list } = await import(`${getMiloLibs()}/blocks/list.js`);
-    return list;
-  } catch (e) {
-    window.lana.log('Couldn\'t load libs list');
-    return [];
-  }
 }
