@@ -1,7 +1,6 @@
 import getMiloLibs from './milo.js';
 
 const config = {
-  imsClientId: 'college',
   projectRoot: `${window.location.origin}/`,
   locales: {
     '': { ietf: 'en-US', tk: 'hah7vzn.css' },
@@ -23,9 +22,7 @@ const {
 } = await import(`${config.miloLibs}/utils/utils.js`);
 
 (async function loadPage() {
-  await new Promise((resolve) => {
-    loadStyle(`${config.miloLibs}/styles/styles.css`, resolve);
-  });
+  loadStyle(`${config.miloLibs}/styles/styles.css`);
   setConfig(config);
   const blocks = decorateArea();
   const navs = decorateNavs();
