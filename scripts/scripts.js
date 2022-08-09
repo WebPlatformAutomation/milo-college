@@ -1,5 +1,13 @@
 import getMiloLibs from './milo.js';
 
+function loadStyle(href, callback) {
+  const link = document.createElement('link');
+  link.setAttribute('rel', 'stylesheet');
+  link.setAttribute('href', href);
+  document.head.appendChild(link);
+}
+loadStyle('http://customer-stories--milo--adobecom.hlx.live/libs/styles/styles.css');
+
 const config = {
   projectRoot: `${window.location.origin}/`,
   locales: {
@@ -11,7 +19,6 @@ const config = {
 };
 
 const {
-  loadStyle,
   decorateArea,
   decorateNavs,
   loadLCP,
@@ -22,7 +29,6 @@ const {
 } = await import(`${config.miloLibs}/utils/utils.js`);
 
 (async function loadPage() {
-  loadStyle(`${config.miloLibs}/styles/styles.css`);
   setConfig(config);
   const blocks = decorateArea();
   const navs = decorateNavs();
