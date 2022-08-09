@@ -6,7 +6,7 @@ function loadStyle(href, callback) {
   link.setAttribute('href', href);
   document.head.appendChild(link);
 }
-loadStyle('http://customer-stories--milo--adobecom.hlx.live/libs/styles/styles.css');
+loadStyle('https://customer-stories--milo--adobecom.hlx.live/libs/styles/styles.css');
 
 const config = {
   projectRoot: `${window.location.origin}/`,
