@@ -1,12 +1,19 @@
-import getMiloLibs from './milo.js';
+const branch = new URLSearchParams(window.location.search).get('milolibs') || 'main';
 
-function loadStyle(href, callback) {
+export default function getMiloLibs() {
+  const { hostname } = window.location;
+  if (!hostname.includes('hlx.page')
+    && !hostname.includes('hlx.live')
+    && !hostname.includes('localhost')) return '/libs';
+  return branch === 'local' ? 'http://localhost:6456/libs' : `https://${branch}.milo.pink/libs`;
+}
+
+function loadStyle(href) {
   const link = document.createElement('link');
   link.setAttribute('rel', 'stylesheet');
   link.setAttribute('href', href);
   document.head.appendChild(link);
 }
-loadStyle('https://customer-stories--milo--adobecom.hlx.live/libs/styles/styles.css');
 
 const config = {
   projectRoot: `${window.location.origin}/`,
@@ -17,6 +24,7 @@ const config = {
   },
   miloLibs: getMiloLibs(),
 };
+loadStyle(`https://${branch}--milo--adobecom.hlx.live/libs/styles/styles.css`);
 
 const {
   decorateArea,
