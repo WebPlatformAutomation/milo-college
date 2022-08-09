@@ -8,13 +8,6 @@ export default function getMiloLibs() {
   return branch === 'local' ? 'http://localhost:6456/libs' : `https://${branch}.milo.pink/libs`;
 }
 
-function loadStyle(href) {
-  const link = document.createElement('link');
-  link.setAttribute('rel', 'stylesheet');
-  link.setAttribute('href', href);
-  document.head.appendChild(link);
-}
-
 const config = {
   projectRoot: `${window.location.origin}/`,
   locales: {
@@ -24,7 +17,13 @@ const config = {
   },
   miloLibs: getMiloLibs(),
 };
-loadStyle(`https://${branch}--milo--adobecom.hlx.live/libs/styles/styles.css`);
+
+(async function loadStyle() {
+  const link = document.createElement('link');
+  link.setAttribute('rel', 'stylesheet');
+  link.setAttribute('href', `${config.miloLibs}/styles/styles.css`);
+  document.head.appendChild(link);
+}());
 
 const {
   decorateArea,
