@@ -20,13 +20,13 @@ const LIBS = 'https://milo.adobe.com/libs';
 
 // Add any config options.
 const CONFIG = {
-  // imsClientId: 'college',
   // codeRoot: '',
   // contentRoot: '',
+  // imsClientId: 'college',
   locales: {
     '': { ietf: 'en-US', tk: 'hah7vzn.css' },
     de: { ietf: 'de-DE', tk: 'hah7vzn.css' },
-    cn: { ietf: 'zh-CN', tk: 'puu3xkp' },
+    kr: { ietf: 'ko-KR', tk: 'zfo3ouc' },
   },
 };
 
