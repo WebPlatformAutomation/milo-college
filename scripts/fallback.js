@@ -1,6 +1,6 @@
 var div = document.createElement('div');
 div.id = 'browserFallbackCon';
-div.style = 'width: 100%; position:absolute; display:block; min-height: 80px; top: 0; z-index: 9999; text-align: center; background: #fff8ea; padding: 12px;';
+div.style = 'width: 100%; position:absolute; display:block; min-height: 80px; top: 0; z-index: 9999; text-align: center; background: #fff; padding: 12px;';
 var locFallbackEntries = [
   { lang: 'en', btn: 'Ignore', text: 'Your web browser is out of date. For more security, comfort and the best experience on this site, please update to or use a modern browser' },
   { lang: 'de', btn: 'Ignorieren', text: 'Ihr Browser ist veraltet. Für mehr Sicherheit, Komfort und die beste Erfahrung auf dieser Website, aktualisieren Sie bitte oder verwenden Sie einen modernen Browser' },
@@ -57,3 +57,4 @@ if(!document.body) {
   document.body = document.createElement('body')
 }
 document.body.insertBefore(div, document.body.firstChild);
+document.body.style = 'display: block';
