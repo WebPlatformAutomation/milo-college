@@ -1,5 +1,4 @@
 var div = document.createElement('div');
-div.id = 'browserFallbackCon';
 div.style.width = '100%';
 div.style.position = 'absolute';
 div.style.display = 'block';
