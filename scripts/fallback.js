@@ -35,6 +35,7 @@ if (!locFallbackText) {
 
 var span = document.createElement('span');
 span.textContent = locFallbackText
+span.lang = userLang
 div.appendChild(span);
 
 if(!document.body) {
