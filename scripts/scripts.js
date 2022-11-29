@@ -29,6 +29,7 @@ const CONFIG = {
     '': { ietf: 'en-US', tk: 'hah7vzn.css' },
     de: { ietf: 'de-DE', tk: 'hah7vzn.css' },
     kr: { ietf: 'ko-KR', tk: 'zfo3ouc' },
+    ch_de: { ietf: 'de-CH', tk: 'vin7zsi.css' },
   },
 };
 
