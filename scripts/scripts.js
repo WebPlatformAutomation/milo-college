@@ -23,7 +23,7 @@ const CONFIG = {
   // codeRoot: '',
   // contentRoot: '',
   // imsClientId: 'college',
-  // geoRouting: 'on',
+  // geoRouting: 'off',
   // fallbackRouting: 'off',
   locales: {
     '': { ietf: 'en-US', tk: 'hah7vzn.css' },
@@ -60,7 +60,6 @@ const miloLibs = setLibs(LIBS);
 const { loadArea, loadDelayed, setConfig } = await import(`${miloLibs}/utils/utils.js`);
 
 (async function loadPage() {
-  debugger;
   setConfig({ ...CONFIG, miloLibs });
   await loadArea();
   loadDelayed();
