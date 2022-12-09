@@ -12,7 +12,7 @@
 
 import { setLibs } from './utils.js';
 
-// Add project-wide styles here.
+// Add project-wide style path here.
 const STYLES = '';
 
 // Use '/libs' if your live site maps '/libs' to milo's origin.
@@ -32,10 +32,10 @@ const CONFIG = {
   },
 };
 
-// Default to loading the first image as eager.
+// Load LCP image immediately
 (async function loadLCPImage() {
   const lcpImg = document.querySelector('img');
-  lcpImg?.setAttribute('loading', 'eager');
+  lcpImg?.removeAttribute('loading');
 }());
 
 /*
