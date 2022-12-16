@@ -12,7 +12,7 @@
 
 import { setLibs } from './utils.js';
 
-// Add project-wide styles here.
+// Add project-wide style path here.
 const STYLES = '';
 
 // Use '/libs' if your live site maps '/libs' to milo's origin.
@@ -23,6 +23,8 @@ const CONFIG = {
   // codeRoot: '',
   // contentRoot: '',
   // imsClientId: 'college',
+  // geoRouting: 'off',
+  // fallbackRouting: 'off',
   locales: {
     '': { ietf: 'en-US', tk: 'hah7vzn.css' },
     de: { ietf: 'de-DE', tk: 'hah7vzn.css' },
@@ -30,10 +32,10 @@ const CONFIG = {
   },
 };
 
-// Default to loading the first image as eager.
+// Load LCP image immediately
 (async function loadLCPImage() {
   const lcpImg = document.querySelector('img');
-  lcpImg?.setAttribute('loading', 'eager');
+  lcpImg?.removeAttribute('loading');
 }());
 
 /*
@@ -55,9 +57,9 @@ const miloLibs = setLibs(LIBS);
   });
 }());
 
-const { loadArea, loadDelayed, setConfig } = await import(`${miloLibs}/utils/utils.js`);
-
 (async function loadPage() {
+  const { loadArea, loadDelayed, setConfig } = await import(`${miloLibs}/utils/utils.js`);
+
   setConfig({ ...CONFIG, miloLibs });
   await loadArea();
   loadDelayed();
